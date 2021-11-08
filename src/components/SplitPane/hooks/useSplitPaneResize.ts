@@ -135,7 +135,6 @@ export const useSplitPaneResize = (options: SplitPaneResizeOptions): SplitPaneRe
   // EFFECTS: manage updates and calculations based on dependency changes for states that are interacted with by multiple functions
   useEffect(() => {
     if (dragState !== null) setMovedSizes(getMovedSizes(dragState));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dragState]);
   useEffect(() => {
     if (dragState !== null) hooks?.onChange?.(movedSizes);

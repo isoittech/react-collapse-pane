@@ -13,5 +13,5 @@ export const useToggleCollapse = ({
         ? setCollapsed(collapsedIndices.filter(i => i !== index))
         : setCollapsed([...collapsedIndices, index]);
     },
-    [collapsedIndices, setCollapsed]
+    [collapsedIndices]
   );
