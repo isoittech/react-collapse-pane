@@ -6,12 +6,10 @@ import { SplitType } from '../SplitPane';
 
 const DEFAULT_COLLAPSE_TRANSITION_TIMEOUT = 500;
 const verticalCss = css`
-  width: 0;
   height: 100%;
 `;
 const horizontalCss = css`
   width: 100%;
-  height: 0;
 `;
 const coverCss = css`
   position: absolute;
@@ -31,9 +29,6 @@ const PaneRoot = styled.div<PaneRootProps>`
   outline: none;
   border: 0;
   overflow: hidden;
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
   ${props => (props.$isVertical ? verticalCss : horizontalCss)}
   ${props => props.$shouldAnimate && `transition: flex-basis ${props.$timeout}ms ease-in-out`}
 `;
@@ -119,7 +114,6 @@ const UnMemoizedPane = ({
       $timeout={timeout}
       className={classes}
       ref={forwardRef}
-      style={{ flexBasis: size }}
     >
       <CollapseOverlay $isCollapsed={isCollapsed} $timeout={timeout} style={collapseOverlayCss} />
       <WidthPreserver $isCollapsed={isCollapsed} style={widthPreserverStyle}>

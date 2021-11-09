@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 import { SplitType } from '.';
 import { Nullable } from '../../types/utilities';
 
@@ -134,23 +134,25 @@ export const moveCollapsedSiblings = ({
 const verticalCss = css`
   left: 0;
   right: 0;
-  flex-direction: row;
 `;
 const horizontalCss = css`
   bottom: 0;
   top: 0;
-  flex-direction: column;
   min-height: 100%;
   width: 100%;
 `;
-export const Wrapper = styled.div<{ split: SplitType }>`
-  display: flex;
+export const Wrapper = styled.div<{
+  split: SplitType;
+  gridTemplateCss: FlattenSimpleInterpolation;
+}>`
+  display: grid;
   flex: 1;
   height: 100%;
   position: absolute;
   outline: none;
   overflow: hidden;
-  ${props => (props.split === 'vertical' ? verticalCss : horizontalCss)}
+  ${(props) => (props.split === 'vertical' ? verticalCss : horizontalCss)}
+  ${(props) => props.gridTemplateCss};
 `;
 
 /**

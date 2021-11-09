@@ -11,6 +11,7 @@ import { useIsLtr } from './hooks/memos/useIsLtr';
 import { useCollapsedSizes } from './hooks/memos/useCollapsedSizes';
 import { Nullable } from '../../types/utilities';
 import { useCollapseOptions } from './hooks/memos/useCollapseOptions';
+import { css } from 'styled-components';
 
 // String Unions
 export type SplitType = 'horizontal' | 'vertical';
@@ -58,7 +59,7 @@ export interface SplitPaneProps {
   children: React.ReactChild[];
 }
 
-export const SplitPane: React.FC<SplitPaneProps> = props => {
+export const SplitPane: React.FC<SplitPaneProps> = (props) => {
   const collapsedSizes = useCollapsedSizes(props);
   const isLtr = useIsLtr(props);
   const isVertical = props.split === 'vertical';
@@ -98,6 +99,29 @@ export const SplitPane: React.FC<SplitPaneProps> = props => {
     }
     return <>{props.children}</>;
   }
+
+  // grid-template-columns/rows
+  const direction = isVertical ? 'columns' : 'rows';
+  const gridTemplateCssSeeds = [`grid-template-${direction}:`];
+
+  childPanes.forEach((pane, paneIndex) => {
+    if (paneIndex - 1 >= 0) {
+      gridTemplateCssSeeds.push('minmax(max-content, max-content)');
+    }
+
+    if (paneIndex === childPanes.length - 1) {
+      // last pane
+      const minSize = getMinSize(paneIndex, props.minSizes);
+      gridTemplateCssSeeds.push(`minmax(${minSize}px, 1fr)`);
+    } else {
+      const minSize = getMinSize(paneIndex, props.minSizes);
+      gridTemplateCssSeeds.push(`minmax(${minSize}px, ${pane.size}px)`);
+    }
+  });
+
+  const gridTemplateCss = css`
+    ${gridTemplateCssSeeds.join(' ')}
+  `;
 
   // stacks the children and places a resizer in between each of them. Each resizer has the same index as the pane that it controls.
   const entries = childPanes.map((pane, paneIndex) => {
@@ -139,7 +163,12 @@ export const SplitPane: React.FC<SplitPaneProps> = props => {
   });
 
   return (
-    <Wrapper key="splitpanewrapper" className={splitPaneClass} split={props.split}>
+    <Wrapper
+      key="splitpanewrapper"
+      className={splitPaneClass}
+      split={props.split}
+      gridTemplateCss={gridTemplateCss}
+    >
       {entries}
     </Wrapper>
   );

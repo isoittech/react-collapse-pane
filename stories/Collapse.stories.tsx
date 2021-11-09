@@ -5,6 +5,7 @@ import { action, configureActions } from '@storybook/addon-actions';
 import React from 'react';
 // @ts-ignore
 import logo from '../docs/icon.svg';
+import { Container } from '@material-ui/core';
 
 configureActions({
   depth: 5,
@@ -74,6 +75,89 @@ storiesOf('Collapsable Panes', module)
           <Link href="https://collapse-pane.zurg.dev" target="_blank" rel="noopener noreferrer">
             <p>Check out the Docs</p>
           </Link>
+        </SplitPane>
+      </Header>
+    );
+  })
+  .add('Vertical Split2', () => {
+    const buttonPositionOffset = 0;
+    const collapseDirection = 'left';
+    const minSizes = [50, 50];
+    // const minSizes = 50;
+    const collapsedSize = 25;
+    const collapseTransition = 500;
+    const grabberSize = 10;
+    const buttonTransition = 'grow';
+
+    return (
+      <Header>
+        <SplitPane
+          split="vertical"
+          collapse={{
+            collapseTransitionTimeout: collapseTransition,
+            buttonTransition,
+            collapseDirection,
+            buttonPositionOffset,
+            collapsedSize: collapsedSize,
+          }}
+          minSizes={minSizes}
+          resizerOptions={{
+            grabberSize,
+          }}
+          hooks={{
+            onCollapse: action(`collapsedSizes`),
+            onDragStarted: action('onDragStarted'),
+            onSaveSizes: action('onDragFinished'),
+          }}
+          initialSizes={[1, 5]}
+        >
+          <Logo src={logo} className="App-logo" alt="logo" />
+          <Link href="https://collapse-pane.zurg.dev" target="_blank" rel="noopener noreferrer">
+            <p>Check out the Docs</p>
+          </Link>
+        </SplitPane>
+      </Header>
+    );
+  })
+  .add('Vertical Split3', () => {
+    const buttonPositionOffset = 0;
+    const collapseDirection = 'left';
+    const minSizes = [50, 50, 100];
+    // const minSizes = 50;
+    const collapsedSize = 25;
+    const collapseTransition = 500;
+    const grabberSize = 10;
+    const buttonTransition = 'grow';
+
+    return (
+      <Header>
+        <SplitPane
+          split="vertical"
+          collapse={{
+            collapseTransitionTimeout: collapseTransition,
+            buttonTransition,
+            collapseDirection,
+            buttonPositionOffset,
+            collapsedSize: collapsedSize,
+          }}
+          minSizes={minSizes}
+          resizerOptions={{
+            grabberSize,
+          }}
+          hooks={{
+            onCollapse: action(`collapsedSizes`),
+            onDragStarted: action('onDragStarted'),
+            onSaveSizes: action('onDragFinished'),
+          }}
+          initialSizes={[1, 2, 7]}
+        >
+          <Logo src={logo} className="App-logo" alt="logo" />
+          <Link href="https://collapse-pane.zurg.dev" target="_blank" rel="noopener noreferrer">
+            <p>Check out the Docs</p>
+          </Link>
+          <Container>
+            <p>Ouiiiiiiiiiiiiiiii!</p>
+          </Container>
         </SplitPane>
       </Header>
     );
